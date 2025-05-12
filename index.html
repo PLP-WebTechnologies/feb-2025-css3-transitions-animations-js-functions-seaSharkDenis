@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 + JS Demo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        #animatedBox {
+            width: 100px;
+            height: 100px;
+            background-color: teal;
+            margin: 20px auto;
+            transition: transform 0.5s ease;
+        }
+
+        .bounce {
+            animation: bounce 0.6s;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-50px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .color-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: lightgray;
+            transition: background-color 0.3s ease;
+        }
+
+        .color-btn:hover {
+            background-color: darkgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Choose a Box Color</h2>
+    <button class="color-btn" onclick="setColor('teal')">Teal</button>
+    <button class="color-btn" onclick="setColor('tomato')">Tomato</button>
+    <button class="color-btn" onclick="setColor('purple')">Purple</button>
+
+    <div id="animatedBox"></div>
+
+    <button class="color-btn" onclick="triggerAnimation()">Bounce!</button>
+
+    <script>
+        const box = document.getElementById("animatedBox");
+
+        // Retrieve saved color preference
+        window.onload = () => {
+            const savedColor = localStorage.getItem("boxColor");
+            if (savedColor) {
+                box.style.backgroundColor = savedColor;
+            }
+        };
+
+        // Store color in localStorage and update box
+        function setColor(color) {
+            localStorage.setItem("boxColor", color);
+            box.style.backgroundColor = color;
+        }
+
+        // Trigger animation
+        function triggerAnimation() {
+            box.classList.remove("bounce"); // reset animation
+            void box.offsetWidth; // force reflow
+            box.classList.add("bounce");
+        }
+    </script>
+
+</body>
+
+</html>
